@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "2c431136-49b0-4c15-a4b8-d360aaab1fae",
+		"name": "CoaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"pm.environment.set(\"api-header-authorization\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiless"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Configurations",
+			"item": [
+				{
+					"name": "1-Query Emails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails?page=1&size=10",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"coas",
+								"v1.0",
+								"configurations",
+								"emails"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Delete Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails/:emailId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"coas",
+								"v1.0",
+								"configurations",
+								"emails",
+								":emailId"
+							],
+							"variable": [
+								{
+									"key": "emailId",
+									"value": "1236"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Request Email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"coas",
+								"v1.0",
+								"configurations",
+								"emails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-HealthCheck",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "b-option",
+								"value": "{{api-header-boption}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"coas",
+								"v1.0",
+								"configurations",
+								"emails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Register email",
+					"item": [
+						{
+							"name": "3.1-Generate verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set(\"api-header-bauthentication-code\", json.data['authentication-code']);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"verification-codes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.2-Request Email",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"coas",
+										"v1.0",
+										"configurations",
+										"emails"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

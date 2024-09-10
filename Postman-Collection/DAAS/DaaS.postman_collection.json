@@ -1,0 +1,1634 @@
+{
+	"info": {
+		"_postman_id": "fa7a2e82-2a27-42f3-92bb-7bc3f1803b66",
+		"name": "DaaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Interbank Transfers",
+			"item": [
+				{
+					"name": "1. Interbank transfers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"issuerAccountNumber\": \"000724750010\",\n  \"recipientAccountId\": \"00ce724d-bc1e-4900-8527-cdb2ac7aba1f\",  \n  \"concept\": \"pago 2 prestamo\",\n  \"amount\": 100.10,\n  \"numericalReference\": \"1234567\",\n  \"type\": \"SPEI\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Interbank transfers schedule unlimited",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"issuerAccountNumber\": \"000724750010\",\n  \"recipientAccountId\": \"e2325926-75b0-443a-9be8-30e8a07a3860\",\n    \"amount\": 0.5,\n    \"sendReminder\": 1,\n    \"type\": \"TEF\",\n    \"concept\": \"Test TEF\",\n    \"numericalReference\": \"12345678\",\n    \"schedule\": {\n        \"frequency\": 2,\n        \"period\": 3,\n        \"initialDate\": \"2024-01-05\",\n        \"numberOfExecutions\": 3\n    }\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Interbank transfers schedule byDate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"984724750010\",\r\n    \"recipientAccountId\": \"e2313926-75b0-443a-9be8-30e8a07a3860\",\r\n    \"amount\": 10.11,\r\n    \"transferDescription\": \"Pago de servicios\",\r\n    \"sendReminder\": 1,\r\n    \"schedule\": {\r\n        \"frequency\": 5,\r\n        \"period\": 2,\r\n        \"initialDate\": \"2024-01-06\",\r\n        \"finalDate\": \"2024-01-30\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Interbank transfers schedule byEjecutions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"984724750010\",\r\n    \"recipientAccountId\": \"e2313926-75b0-443a-9be8-30e8a07a3860\",\r\n    \"amount\": 10.12,\r\n    \"transferDescription\": \"Pago de servicios profesionales\",\r\n    \"sendReminder\": 1,\r\n    \"schedule\": {\r\n        \"frequency\": 2,\r\n        \"period\": 3,\r\n        \"initialDate\": \"2023-06-30\",\r\n        \"numberOfExecutions\": 10\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Queries Interbank transfers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers?accountID=882b25f2-5513-405a-97ae-3226f9a2c707&from=2024-01-12&to=2024-01-12&page=1&size=10&type=SPEI",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers"
+							],
+							"query": [
+								{
+									"key": "accountID",
+									"value": "882b25f2-5513-405a-97ae-3226f9a2c707"
+								},
+								{
+									"key": "from",
+									"value": "2024-01-12"
+								},
+								{
+									"key": "to",
+									"value": "2024-01-12"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "type",
+									"value": "SPEI"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Queries interbank transfer schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules?accountID=9b37e7b2-8407-4ddc-aad6-6958ae7917c8&page=1&size=10&type=SPEI",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								"schedules"
+							],
+							"query": [
+								{
+									"key": "accountID",
+									"value": "9b37e7b2-8407-4ddc-aad6-6958ae7917c8"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "type",
+									"value": "SPEI"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Queries Interbank transfers by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/:transferId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								":transferId"
+							],
+							"variable": [
+								{
+									"key": "transferId",
+									"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Queries Interbank transfers receipt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/:transferId/receipt?transferDate=2024-06-22",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								":transferId",
+								"receipt"
+							],
+							"query": [
+								{
+									"key": "transferDate",
+									"value": "2024-06-22"
+								},
+								{
+									"key": "transferScheduleId",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "transferId",
+									"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Deletes a scheduled Interbank transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules/:transferScheduleId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers",
+								"schedules",
+								":transferScheduleId"
+							],
+							"variable": [
+								{
+									"key": "transferScheduleId",
+									"value": "214de5ab-b0e1-444f-be52-83fc5ead1e3d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Interbank transfers health-check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Option",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"interbank-transfers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"pm.environment.set(\"api-header-authorization\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "client_secret",
+								"value": "8971d463-f8a8-4698-b3e5-c018d1a74517",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "client_id",
+								"value": "anypoint-baas-test",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{keycloak-https-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiles&claims=sbox",
+							"host": [
+								"{{keycloak-https-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiles"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Internal Transfers",
+			"item": [
+				{
+					"name": "1. Internal transfers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"998797240061\",\r\n    \"recipientAccountId\": \"ba4c6485-514d-4845-8aee-0aa74187fc33\",\r\n    \"amount\": 11.45,\r\n    \"transferDescription\": \"pago de cel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Internal transfers schedule unlimited",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"984724750010\",\r\n    \"recipientAccountId\": \"ba4c6485-514d-4845-8aee-0aa74187fc33\",\r\n    \"amount\": 1.12,\r\n    \"transferDescription\": \"test MFA David\",\r\n    \"sendReminder\": 1,\r\n    \"schedule\": {\r\n        \"frequency\": 2,\r\n        \"period\": 3,\r\n        \"initialDate\": \"2024-01-06\",\r\n        \"numberOfExecutions\": 3\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Internal transfers schedule byDate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"984724750010\",\r\n    \"recipientAccountId\": \"44ec2cb3-7acd-4714-8876-c5ab3717c477\",\r\n    \"amount\": 10.11,\r\n    \"transferDescription\": \"Pago de servicios profesionales\",\r\n    \"sendReminder\": 0,\r\n    \"schedule\": {\r\n        \"frequency\": 5,\r\n        \"period\": 2,\r\n        \"initialDate\": \"2023-06-30\",\r\n        \"finalDate\": \"2023-08-30\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Internal transfers schedule byEjecutions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"issuerAccountNumber\": \"001175950024\",\r\n    \"recipientAccountId\": \"c0ad2bc6-c799-4fdd-b234-c7918b5722b4\",\r\n    \"amount\": 1.13,\r\n    \"transferDescription\": \"Pago de dd\",\r\n    \"sendReminder\": 0,\r\n    \"schedule\": {\r\n        \"frequency\": 2,\r\n        \"period\": 3,\r\n        \"initialDate\": \"2023-09-29\",\r\n        \"numberOfExecutions\": 10\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/schedules",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Deletes a scheduled internal transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/schedules/:transferScheduleId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								"schedules",
+								":transferScheduleId"
+							],
+							"variable": [
+								{
+									"key": "transferScheduleId",
+									"value": "424353b4-07e1-455b-a5c4-a0d17f50e381"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Queries internal transfers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers?accountID=806f2424-14c4-4ca1-a5d1-a12ed3fde60a&from=2023-12-26&to=2023-12-29&page=1&size=10",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers"
+							],
+							"query": [
+								{
+									"key": "accountID",
+									"value": "806f2424-14c4-4ca1-a5d1-a12ed3fde60a"
+								},
+								{
+									"key": "from",
+									"value": "2023-12-26"
+								},
+								{
+									"key": "to",
+									"value": "2023-12-29"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Queries internal transfers by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/:transferId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								":transferId"
+							],
+							"variable": [
+								{
+									"key": "transferId",
+									"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Queries internal transfer schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/schedules?accountID=9b37e7b2-8407-4ddc-aad6-6958ae7917c8&page=1&size=10",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								"schedules"
+							],
+							"query": [
+								{
+									"key": "accountID",
+									"value": "9b37e7b2-8407-4ddc-aad6-6958ae7917c8"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Queries internal transfers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/:transferId/receipt?transferDate=2024-06-22",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers",
+								":transferId",
+								"receipt"
+							],
+							"query": [
+								{
+									"key": "transferDate",
+									"value": "2024-06-22"
+								}
+							],
+							"variable": [
+								{
+									"key": "transferId",
+									"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Internal transfers health-check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Option",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"daas",
+								"v1.0",
+								"internal-transfers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
