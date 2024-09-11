@@ -3,7 +3,7 @@
 This repository contains utilities or artifacts to facilitate the consumption and testing of the Hey Banco and Banregio API's.  
 `Spanish translation:` Este repositorio contiene utilerias o artefactos para facilitar el consumo y testeo de las APIs de Hey Banco y Banregio.
 
-1. Java client to perform the payload encryption/decryption required to be sent in Postman requests. `Spanish translation:` Cliente Java para realizar el cifrado/descifrado de carga util que requiere enviar en las peticiones de Postman.
+1. Java client to perform the payload encryption/decryption required to be sent in Postman requests. `Spanish translation:` Cliente Java para realizar el cifrado/descifrado de carga útil que requiere enviar en las peticiones de Postman.
 * Directory/Directorio: Client JWS-JWE
 2. Postman Collections, allows developers to interact with various APIs efficiently `Spanish translation:` Colecciones Postman, permite a los desarrolladores interactuar con diversas APIs de manera eficiente.
 * Directory/Directorio: Postman-Collection
@@ -35,7 +35,7 @@ This repository contains utilities or artifacts to facilitate the consumption an
 
 2. **Postman:** Configure the following: `Spanish translation:` Configurar lo siguiente:
 * Add the certificate in Postman of the domain of the APIs that are required to be tested in the Configuration option -> Certificates, file Client_KeyStore_mTLS.p12 `Spanish translation:` Agregar el certificado en Postman del dominio de las APIs que se requiere probar en la opción de Configuración -> Certificados, archivo Client_KeyStore_mTLS.p12
-* Configure the environment variables of the domain to be tested, obtain the necessary information from the API Kit. `Spanish translation:` Configurar las variables de ambiente del doninio a probar, obtener la informacion necesaria del API Kit.  
+* Configure the environment variables of the domain to be tested, obtain the necessary information from the API Kit. `Spanish translation:` Configurar las variables de ambiente del dominio a probar, obtener la información necesaria del API Kit.  
 
 ##  Testing ⚙️
 
@@ -44,7 +44,7 @@ This repository contains utilities or artifacts to facilitate the consumption an
 cd Client\ JWS-JWE
 java -jar ClientJWSJWE-1.1.3.jar
 ```
-* Postman Collections/Colecciones Postman: Select the environment variable and request of the API that you want to test, if it is required to send a payload in the request it must be previously encrypted using the Java Client. `Spanish translation:` Selecccionar la variable de ambiente  y peticion de la API que desea probar,  si se requiere enviar carga util en la peticion debera encriptarse previamente usando el Cliente Java
+* Postman Collections/Colecciones Postman: Select the environment variable and request of the API that you want to test, if it is required to send a payload in the request it must be previously encrypted using the Java Client. `Spanish translation:` Seleccionar la variable de ambiente  y petición de la API que desea probar,  si se requiere enviar carga útil en la petición deberá encriptarse previamente usando el Cliente Java.
 
 ### Autors / Autores ✒️
 - [Hey, Tech developers](mailto:developers@hey.inc?subject=API%20Snippets)
