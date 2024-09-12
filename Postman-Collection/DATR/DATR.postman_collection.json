@@ -1,0 +1,785 @@
+{
+	"info": {
+		"_postman_id": "b1f7eea1-8738-462b-82c9-68222c3d8d32",
+		"name": "DATR Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30846049"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"api-header-authorization\",pm.response.json().access_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "default"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "default"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-user_info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiless"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Accounts",
+					"item": [
+						{
+							"name": "1-accounts",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/accounts",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2-account",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/accounts/{{accountId}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"accounts",
+										"{{accountId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3-balances",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/accounts/{{accountId}}/balances",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"accounts",
+										"{{accountId}}",
+										"balances"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4-transactions",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var date = new Date()\r",
+											"var year=date.getFullYear();\r",
+											"var month=date.getMonth()+1\r",
+											"var firstDay = \"01\"\r",
+											"var lastDay = date.getDate();\r",
+											"\r",
+											"if(lastDay < 10){\r",
+											"    lastDay = \"0\"+lastDay;\r",
+											"}\r",
+											"\r",
+											"var from=year+\"-\"+month+\"-\"+firstDay;\r",
+											"var to=year+\"-\"+month+\"-\"+lastDay;\r",
+											"\r",
+											"pm.environment.set(\"from\",from)\r",
+											"pm.environment.set(\"to\",to)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/accounts/{{accountId}}/transactions?from={{from}}&to={{to}}&size={{size}}&page={{page}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"accounts",
+										"{{accountId}}",
+										"transactions"
+									],
+									"query": [
+										{
+											"key": null,
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "from",
+											"value": "{{from}}"
+										},
+										{
+											"key": "to",
+											"value": "{{to}}"
+										},
+										{
+											"key": "size",
+											"value": "{{size}}"
+										},
+										{
+											"key": "page",
+											"value": "{{page}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account Access Consent",
+					"item": [
+						{
+							"name": "1-consent-create",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"AccountNumber\": \"010101010101\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/account-access-consents",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"account-access-consents"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2-consent-patch",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "{{api-header-boption}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"Otp\": \"81945949\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/account-access-consents/{{accountId}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"account-access-consents",
+										"{{accountId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3-consent",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/account-access-consents/{{accountId}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"account-access-consents",
+										"{{accountId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4-consent-get-all",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/account-access-consents",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"account-access-consents"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5-consent-delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/datr/v1.0/account-access-consents/{{accountId}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"datr",
+										"v1.0",
+										"account-access-consents",
+										"{{accountId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

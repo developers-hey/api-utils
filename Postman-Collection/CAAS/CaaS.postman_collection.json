@@ -1,0 +1,1287 @@
+{
+	"info": {
+		"_postman_id": "13154eaf-4136-4050-8447-7ddfb6dc610a",
+		"name": "CaaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"pm.environment.set(\"api-header-authorization\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{keycloak-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{keycloak-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"host": [
+								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiless"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agreements",
+			"item": [
+				{
+					"name": "1 - Users creation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago tel\",\n    \"rfc\": \"JICA940202KT9\",\n    \"accountNumber\": \"4578986875214586\",\n    \"accountType\": \"DEBIT CARD\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 4250.5\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "145"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - User query",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "145"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Users query",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users/:userId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "145"
+								},
+								{
+									"key": "userId",
+									"value": "266"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - User modify",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"userId\": 138,\n    \"email\": \"ejemplo@gmail.com\",\n    \"alias\": \"modificacionDos\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - User removal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"userId\": 9687\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "150"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - Collections creation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 456,\n  \"reference\": \"ASD-0021_349256E\",\n  \"amount\": 100,\n  \"periodicityId\": \"M\",\n  \"firstCollectionDate\": \"2024-07-16\",\n  \"collectionValidity\": {\n    \"type\": \"CHARGES\",\n    \"validUntil\": \"1\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"collections"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - Collections query",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections?accountNumber=001662653021",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"collections"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2022-08-01",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2022-10-30",
+									"disabled": true
+								},
+								{
+									"key": "accountNumber",
+									"value": "001662653021"
+								},
+								{
+									"key": "reference",
+									"value": "160000210349253",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "42"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - Collections removal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"collectionId\": 146\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"collections"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "150"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9 - Transaction query",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2024-04-01&to=2024-06-01",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2024-04-01"
+								},
+								{
+									"key": "to",
+									"value": "2024-06-01"
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "150"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10 - Contract query",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements?accountNumber=888532620789",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "888532620789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11 - Health check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-option",
+								"value": "0",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "2.1 - Queries the contract information",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements?accountNumber=251008320041",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "251008320041"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.1 - Registers one or more users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago luz\",\n    \"rfc\": \"\",\n    \"curp\": \"JICA940201HDFRDR06\",\n    \"accountNumber\": \"058585004500006705\",\n    \"reference\": \"160000210349253\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 500,\n    \"amount\": 499.99,\n    \"periodicityId\": \"M\",\n    \"paymentMonthDay\": 30,\n    \"permanent\": false,\n    \"finalDate\": \"2023-05-20\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.1 - Queries all registered users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users?from=2022-08-01&to=2022-10-30",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2022-08-01"
+								},
+								{
+									"key": "to",
+									"value": "2022-10-30"
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5.1 - Deletes users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"userId\": 4924\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"users"
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6.1 - Queries the status of direct debit charges",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2020-04-01&to=2020-07-01",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"agreements",
+								":agreementId",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2020-04-01"
+								},
+								{
+									"key": "to",
+									"value": "2020-07-01"
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "agreementId",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
