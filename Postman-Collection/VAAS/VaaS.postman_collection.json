@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "08e04eb1-319a-4626-9bac-da1d65d8ff0f",
+		"name": "VaaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"pm.environment.set(\"api-header-authorization\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/userinfo?scopes=profiles&claims=sbox",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiles"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account-Holder-validations",
+			"item": [
+				{
+					"name": "1-Validacion Account Holder interbank",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Option",
+								"value": "{{api-header-boption-interbank}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"issuerAccountNumber\": \"984724750010\",\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"012345678901234567\",\n      \"accountTypeId\": 3,\n      \"financialEntityId\": \"012\",\n      \"numericalReference\": \"1234567\",\n      \"description\": \"Ejemplo 1\",\n      \"beneficiaryName\": \"Juan Lopez Rodriguez\"\n    },\n        {\n      \"accountNumber\": \"002580701572218749\",\n      \"accountTypeId\": 3,\n      \"financialEntityId\": \"002\",\n      \"numericalReference\": \"1234567\",\n      \"description\": \"Ejemplo 2\",\n      \"beneficiaryName\": \"Juan Lopez Rodriguez\"\n    },\n        {\n      \"accountNumber\": \"8112345678\",\n      \"accountTypeId\": 2,\n      \"financialEntityId\": \"072\",\n      \"numericalReference\": \"1234567\",\n      \"description\": \"Ejemplo 3\",\n      \"beneficiaryName\": \"Juan Lopez Rodriguez\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/vaas/v1.0/account-holder-validations",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"vaas",
+								"v1.0",
+								"account-holder-validations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Validacion Account Holder Internal",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "B-Option",
+								"value": "{{api-header-boption-internal}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"issuerAccountNumber\": \"984724750010\",\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"001003000016\",\n      \"accountTypeId\": 1,\n      \"description\": \"Ejemplo 1\"\n    },\n    {\n      \"accountNumber\": \"001006010012\",\n      \"accountTypeId\": 1,\n      \"description\": \"Ejemplo 2\"\n    },\n    {\n      \"accountNumber\": \"955036570016\",\n      \"accountTypeId\": 1,\n      \"description\": \"Ejemplo 3\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/vaas/v1.0/account-holder-validations",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"vaas",
+								"v1.0",
+								"account-holder-validations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Query validations",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/vaas/v1.0/account-holder-validations/:requestId?page=1&size=10",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"vaas",
+								"v1.0",
+								"account-holder-validations",
+								":requestId"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							],
+							"variable": [
+								{
+									"key": "requestId",
+									"value": "6429f644-cd0b-48ad-8039-208bb0418852"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.- Options",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-option",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/vaas/v1.0/account-holder-validations",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"vaas",
+								"v1.0",
+								"account-holder-validations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

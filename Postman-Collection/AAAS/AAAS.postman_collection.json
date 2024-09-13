@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "a15a7a14-f6e4-4600-8475-dcf94a562b18",
+		"name": "AAAS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30846049"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"api-header-authorization\",pm.response.json().access_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"host": [
+								"{{iam-http-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiless"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "1-payment-create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Option",
+								"value": "0",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "ELSBZ4",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 300.12,\n  \"description\": \"Cargo por compra de tiempo aire\",\n  \"reference\": \"XZ000001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/aaas/v1.0/payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"aaas",
+								"v1.0",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Health check",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-option",
+								"value": "0",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/aaas/v1.0/payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"aaas",
+								"v1.0",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
