@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "d928832c-11ca-4488-ae6a-0300d2c41b65",
-		"name": "LAAS Copy",
+		"name": "LAAS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30846049"
 	},
@@ -45,12 +45,12 @@
 								},
 								{
 									"key": "client_id",
-									"value": "{{keycloak-client-id}}",
+									"value": "{{iam-client-id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "{{keycloak-client-secret}}",
+									"value": "{{iam-client-secret}}",
 									"type": "text"
 								},
 								{
@@ -61,9 +61,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",
@@ -85,12 +85,12 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "{{keycloak-client-id}}",
+									"value": "{{iam-client-id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "{{keycloak-client-secret}}",
+									"value": "{{iam-client-secret}}",
 									"type": "text"
 								},
 								{
@@ -101,9 +101,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token/introspect",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",
@@ -122,9 +122,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",

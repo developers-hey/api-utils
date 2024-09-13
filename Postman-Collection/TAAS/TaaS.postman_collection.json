@@ -952,12 +952,12 @@
 								},
 								{
 									"key": "client_id",
-									"value": "{{keycloak-client-id}}",
+									"value": "{{iam-client-id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "{{keycloak-client-secret}}",
+									"value": "{{iam-client-secret}}",
 									"type": "text"
 								},
 								{
@@ -968,9 +968,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",
@@ -995,12 +995,12 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "{{keycloak-client-id}}",
+									"value": "{{iam-client-id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "{{keycloak-client-secret}}",
+									"value": "{{iam-client-secret}}",
 									"type": "text"
 								},
 								{
@@ -1011,9 +1011,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/token/introspect",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/token/introspect",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",
@@ -1049,9 +1049,9 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "{{keycloak-http-protocol}}{{keycloak-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"raw": "{{iam-http-protocol}}{{iam-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
 							"host": [
-								"{{keycloak-http-protocol}}{{keycloak-host-domain}}"
+								"{{iam-http-protocol}}{{iam-host-domain}}"
 							],
 							"path": [
 								"auth",
