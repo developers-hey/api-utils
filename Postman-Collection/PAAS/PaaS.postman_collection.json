@@ -1,0 +1,1099 @@
+{
+	"info": {
+		"_postman_id": "18baa1e5-c3a3-42a9-8bd8-1f8296551dbb",
+		"name": "PaaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Pay services",
+					"item": [
+						{
+							"name": "4.1-Generate verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set(\"api-header-bauthentication-code\", json.data['authentication-code']);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"verification-codes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4.2-Pay service",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"categoryId\": 1,\n  \"serviceId\": 3,\n  \"providerId\": \"6900\",\n  \"issuerAccountNumber\": \"984724750010\",\n  \"reference\": \"0215499146\",\n  \"secondaryReference\": \"\",\n  \"amount\": 1042,\n  \"checkDigit\": \"\",\n  \"branchId\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"payments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pay taxes",
+					"item": [
+						{
+							"name": "1.1-Generate verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set(\"api-header-bauthentication-code\", json.data['authentication-code']);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"verification-codes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.2-Pay taxes",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"issuerAccountNumber\": \"984724750010\",\n  \"reference\": \"0017AAMX953568821244\",\n  \"taxPaymentType\": 59,\n  \"amount\": 1\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/taxes-payments",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"taxes-payments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.3-Get Receipt",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/taxes-payments/:receiptId",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"taxes-payments",
+										":receiptId"
+									],
+									"variable": [
+										{
+											"key": "receiptId",
+											"value": "20909268"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "1-Categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"payments",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Providers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories/:categoryId/services/:serviceId/providers",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"payments",
+								"categories",
+								":categoryId",
+								"services",
+								":serviceId",
+								"providers"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Provider",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories/:categoryId/services/:serviceId/providers/:providerId/required-fields",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"payments",
+								"categories",
+								":categoryId",
+								"services",
+								":serviceId",
+								"providers",
+								":providerId",
+								"required-fields"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "3"
+								},
+								{
+									"key": "providerId",
+									"value": "6900"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Payments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryId\": 1,\n  \"serviceId\": 3,\n  \"providerId\": \"6900\",\n  \"issuerAccountNumber\": \"984724750010\",\n  \"reference\": \"0215499146\",\n  \"secondaryReference\": \"\",\n  \"amount\": 1041,\n  \"checkDigit\": \"\",\n  \"branchId\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5-Health-Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "B-option",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Taxes-Payments",
+			"item": [
+				{
+					"name": "1-Taxes-Payments",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{api-header-contenttype}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"issuerAccountNumber\": \"984724750010\",\n  \"reference\": \"0017AAMX953568821244\",\n  \"taxPaymentType\": 59,\n  \"amount\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/taxes-payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"taxes-payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Get Receipt",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/taxes-payments/:receiptId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"taxes-payments",
+								":receiptId"
+							],
+							"variable": [
+								{
+									"key": "receiptId",
+									"value": "20909268"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Health-Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "B-option",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/taxes-payments",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"paas",
+								"v1.0",
+								"taxes-payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"pm.environment.set(\"api-header-authorization\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+							"host": [
+								"{{iam-https-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-Introspection",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token/introspect",
+							"host": [
+								"{{iam-https-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"token",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-UserInfo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/userinfo?scopes=profiless&claims=sbox",
+							"host": [
+								"{{iam-https-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"v1",
+								"oidc",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "scopes",
+									"value": "profiless"
+								},
+								{
+									"key": "claims",
+									"value": "sbox"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
