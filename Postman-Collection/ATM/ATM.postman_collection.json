@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "c2174ce2-b313-48f0-8dc1-c20dde89954d",
+		"name": "ATM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "0-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"api-header-authorization\",pm.response.json().access_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{iam-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{iam-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/realms/developers/protocol/openid-connect/token",
+							"host": [
+								"{{iam-https-protocol}}{{iam-host-domain}}"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"developers",
+								"protocol",
+								"openid-connect",
+								"token"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Atms",
+			"item": [
+				{
+					"name": "1-atms",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/api/openbanking/v1/atms",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"api",
+								"openbanking",
+								"v1",
+								"atms"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
