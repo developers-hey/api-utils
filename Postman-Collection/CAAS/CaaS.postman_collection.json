@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "13154eaf-4136-4050-8447-7ddfb6dc610a",
+		"_postman_id": "4fe64f3f-3119-4c1a-8da0-b07159158675",
 		"name": "CaaS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -768,7 +768,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2024-04-01&to=2024-06-01",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2024-04-01&to=2024-06-01&page=0&size=10",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
@@ -790,13 +790,11 @@
 								},
 								{
 									"key": "page",
-									"value": "2",
-									"disabled": true
+									"value": "0"
 								},
 								{
 									"key": "size",
-									"value": "10",
-									"disabled": true
+									"value": "10"
 								}
 							],
 							"variable": [
@@ -923,10 +921,10 @@
 			]
 		},
 		{
-			"name": "Flows",
+			"name": "Collection links",
 			"item": [
 				{
-					"name": "2.1 - Queries the contract information",
+					"name": "1 - Affiliations",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -941,11 +939,6 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Accept",
-								"value": "{{api-header-accept}}",
-								"type": "text"
-							},
-							{
 								"key": "B-Application",
 								"value": "{{api-header-bapplication}}",
 								"type": "text"
@@ -956,33 +949,33 @@
 								"type": "text"
 							},
 							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
 								"key": "Accept-Charset",
 								"value": "{{api-header-acceptcharset}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements?accountNumber=251008320041",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/affiliations",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
 							"path": [
 								"caas",
 								"v1.0",
-								"agreements"
-							],
-							"query": [
-								{
-									"key": "accountNumber",
-									"value": "251008320041"
-								}
+								"collection-links",
+								"affiliations"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "3.1 - Registers one or more users",
+					"name": "2 - Collection links",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1024,7 +1017,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago luz\",\n    \"rfc\": \"\",\n    \"curp\": \"JICA940201HDFRDR06\",\n    \"accountNumber\": \"058585004500006705\",\n    \"reference\": \"160000210349253\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 500,\n    \"amount\": 499.99,\n    \"periodicityId\": \"M\",\n    \"paymentMonthDay\": 30,\n    \"permanent\": false,\n    \"finalDate\": \"2023-05-20\"\n  }\n]",
+							"raw": "{\n    \"amount\": 1,\n    \"concept\": \"pago tel\",\n    \"notificationType\": 3,\n    \"email\": \"email@gmail.com\",\n    \"affiliationId\": 108\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1032,29 +1025,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
 							"path": [
 								"caas",
 								"v1.0",
-								"agreements",
-								":agreementId",
-								"users"
-							],
-							"variable": [
-								{
-									"key": "agreementId",
-									"value": "2"
-								}
+								"collection-links"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "4.1 - Queries all registered users",
+					"name": "3 - Collection links",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1069,10 +1054,83 @@
 						"method": "GET",
 						"header": [
 							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
 								"key": "Accept",
 								"value": "{{api-header-accept}}",
 								"type": "text"
 							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links?from=2025-02-10&to=2025-02-21&page=1&size=10",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"collection-links"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2025-02-10"
+								},
+								{
+									"key": "to",
+									"value": "2025-02-21"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "affiliationId",
+									"value": "108",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Collection link",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
 							{
 								"key": "B-Application",
 								"value": "{{api-header-bapplication}}",
@@ -1084,47 +1142,31 @@
 								"type": "text"
 							},
 							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
 								"key": "Accept-Charset",
 								"value": "{{api-header-acceptcharset}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users?from=2022-08-01&to=2022-10-30",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/:collectionLinkId",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
 							"path": [
 								"caas",
 								"v1.0",
-								"agreements",
-								":agreementId",
-								"users"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "2022-08-01"
-								},
-								{
-									"key": "to",
-									"value": "2022-10-30"
-								},
-								{
-									"key": "page",
-									"value": "2",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "10",
-									"disabled": true
-								}
+								"collection-links",
+								":collectionLinkId"
 							],
 							"variable": [
 								{
-									"key": "agreementId",
-									"value": "2"
+									"key": "collectionLinkId",
+									"value": "b1f2116b-35d5-41f1-9e1a-12a412831804"
 								}
 							]
 						}
@@ -1132,7 +1174,7 @@
 					"response": []
 				},
 				{
-					"name": "5.1 - Deletes users",
+					"name": "5 - Collection link",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1145,6 +1187,232 @@
 							]
 						},
 						"method": "DELETE",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/:collectionLinkId",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"collection-links",
+								":collectionLinkId"
+							],
+							"variable": [
+								{
+									"key": "collectionLinkId",
+									"value": "b1f2116b-35d5-41f1-9e1a-12a412831804"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - Collection link receipt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/:collectionLinkId/receipt",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"collection-links",
+								":collectionLinkId",
+								"receipt"
+							],
+							"variable": [
+								{
+									"key": "collectionLinkId",
+									"value": "b1f2116b-35d5-41f1-9e1a-12a412831804"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - Collection links",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Option",
+								"value": "0",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"collection-links"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Periodic charges",
+			"item": [
+				{
+					"name": "1 - Affiliations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges/affiliations",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"periodic-charges",
+								"affiliations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Periodic charge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -1170,11 +1438,16 @@
 								"key": "Accept-Charset",
 								"value": "{{api-header-acceptcharset}}",
 								"type": "text"
+							},
+							{
+								"key": "B-Authentication-Code",
+								"value": "{{api-header-bauthentication-code}}",
+								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n    \"userId\": 4924\n  }\n]",
+							"raw": "{\n  \"cardNumber\": \"4741576727015432\",\n  \"cardHolderName\": \"Gabriel Juarez\",\n  \"amount\": 100.00,\n  \"concept\": \"Concept\",\n  \"reference\": \"1000412\",\n  \"affiliationId\": 7090010\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1182,29 +1455,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
 							"path": [
 								"caas",
 								"v1.0",
-								"agreements",
-								":agreementId",
-								"users"
-							],
-							"variable": [
-								{
-									"key": "agreementId",
-									"value": "2"
-								}
+								"periodic-charges"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "6.1 - Queries the status of direct debit charges",
+					"name": "3 - Periodic charges",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1219,10 +1484,86 @@
 						"method": "GET",
 						"header": [
 							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
 								"key": "Accept",
 								"value": "{{api-header-accept}}",
 								"type": "text"
 							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges?from=2025-03-01&to=2025-04-01&page=1&size=10&affiliationId=8090015&status=1",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"periodic-charges"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2025-03-01"
+								},
+								{
+									"key": "to",
+									"value": "2025-04-01"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "affiliationId",
+									"value": "8090015"
+								},
+								{
+									"key": "status",
+									"value": "1"
+								},
+								{
+									"key": "massiveOperationId",
+									"value": "fff63e2c-7704-4d71-8e55-271b69ff3d46",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Periodic charge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
 							{
 								"key": "B-Application",
 								"value": "{{api-header-bapplication}}",
@@ -1234,52 +1575,2342 @@
 								"type": "text"
 							},
 							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
 								"key": "Accept-Charset",
 								"value": "{{api-header-acceptcharset}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2020-04-01&to=2020-07-01",
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges/:chargeId",
 							"host": [
 								"{{api-https-protocol}}{{api-host-domain}}"
 							],
 							"path": [
 								"caas",
 								"v1.0",
-								"agreements",
-								":agreementId",
-								"transactions"
-							],
-							"query": [
-								{
-									"key": "from",
-									"value": "2020-04-01"
-								},
-								{
-									"key": "to",
-									"value": "2020-07-01"
-								},
-								{
-									"key": "page",
-									"value": "2",
-									"disabled": true
-								},
-								{
-									"key": "size",
-									"value": "10",
-									"disabled": true
-								}
+								"periodic-charges",
+								":chargeId"
 							],
 							"variable": [
 								{
-									"key": "agreementId",
-									"value": "6"
+									"key": "chargeId",
+									"value": "ec7ef614-89c4-4918-8cc9-14993e5a7230"
 								}
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "5 - Periodic charges",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "text"
+							},
+							{
+								"key": "B-Option",
+								"value": "4",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"caas",
+								"v1.0",
+								"periodic-charges"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Collection links",
+					"item": [
+						{
+							"name": "Settings and General",
+							"item": [
+								{
+									"name": "1.1 - Get a token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+                                            		"pm.environment.set(\"api-header-authorization\", json.access_token);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{iam-client-id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{iam-client-secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "openid",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+											"host": [
+												"{{iam-https-protocol}}{{iam-host-domain}}"
+											],
+											"path": [
+												"auth",
+												"v1",
+												"oidc",
+												"token"
+											]
+										}
+									}
+								},
+								{
+									"name": "2.1 - Generate a verification code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+													"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"verification-codes"
+											]
+										}
+									}
+								},
+								{
+									"name": "3.1 - Configure a email notification",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"coas",
+												"v1.0",
+												"configurations",
+												"emails"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Generate collection links",
+							"item": [
+								{
+									"name": "1.1 - Search for affiliations",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/affiliations",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"collection-links",
+												"affiliations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Generate a new collection link",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"amount\": 1,\n    \"concept\": \"pago tel\",\n    \"notificationType\": 3,\n    \"email\": \"email@gmail.com\",\n    \"affiliationId\": 108\n  }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"collection-links"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.1 - Search for collection link",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/:collectionLinkId",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"collection-links",
+												":collectionLinkId"
+											],
+											"variable": [
+												{
+													"key": "collectionLinkId",
+													"value": "b1f2116b-35d5-41f1-9e1a-12a412831804"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Notifications",
+							"item": [
+								{
+									"name": "1.1 - Search for notification events",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/webhooks/events",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"webhooks",
+												"events"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Events webhook subscription with client credentials",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"authenticationType\": \"C\",\r\n  \"clientId\": \"myClients\",\r\n  \"clientSecret\": \"11598ae8-1170-a058-92ff-a1afc4b12c61\",\r\n  \"events\": [\r\n    {\r\n      \"id\": 1\r\n    }\r\n  ],\r\n  \"authenticationUrl\": \"https://fintech.com/base/callback-api/v1.0/authentication\",\r\n  \"authorizationUrl\": \"https://fintech.com/base/callback-api/v1.0/authorization\",\r\n  \"notificationUrl\": \"https://fintech.com/base/callback-api/v1.0/notifications\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/webhooks",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"webhooks"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.2 - Events webhook subscription with api key",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "123DE4",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"authenticationType\": \"A\",\r\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\r\n  \"notificationUrl\": \"https://fintech.com/base/callback-api/v1.0/notifications\",\r\n  \"authorizationUrl\": \"https://api-dev.banregio.com/base/callback-api/v1.0/authorization\",\r\n  \"events\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 4\r\n    }\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/webhooks",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"webhooks"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.1 - Search for sent notifications",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/webhooks/notifications?from=2024-07-01&to=2024-08-01&page=1&size=10&idEvent=2",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"webhooks",
+												"notifications"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2024-07-01"
+												},
+												{
+													"key": "to",
+													"value": "2024-08-01"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "size",
+													"value": "10"
+												},
+												{
+													"key": "idEvent",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Others",
+							"item": [
+								{
+									"name": "1.1 - Search for collection link receipt",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/collection-links/:collectionLinkId/receipt",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"collection-links",
+												":collectionLinkId",
+												"receipt"
+											],
+											"variable": [
+												{
+													"key": "collectionLinkId",
+													"value": "b1f2116b-35d5-41f1-9e1a-12a412831804"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Domiciliation",
+					"item": [
+						{
+							"name": "Settings and General",
+							"item": [
+								{
+									"name": "1.1 - Get a token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+                                            		"pm.environment.set(\"api-header-authorization\", json.access_token);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{iam-client-id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{iam-client-secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "openid",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+											"host": [
+												"{{iam-https-protocol}}{{iam-host-domain}}"
+											],
+											"path": [
+												"auth",
+												"v1",
+												"oidc",
+												"token"
+											]
+										}
+									}
+								},
+								{
+									"name": "2.1 - Generate a verification code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+													"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"verification-codes"
+											]
+										}
+									}
+								},
+								{
+									"name": "3.1 - Configure a email notification",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"coas",
+												"v1.0",
+												"configurations",
+												"emails"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Individual collection",
+							"item": [
+								{
+									"name": "1.1 - Queries the contract information",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements?accountNumber=251008320041",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements"
+											],
+											"query": [
+												{
+													"key": "accountNumber",
+													"value": "251008320041"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Users creation",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\n  {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago tel\",\n    \"rfc\": \"JICA940202KT9\",\n    \"accountNumber\": \"4578986875214586\",\n    \"accountType\": \"DEBIT CARD\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 4250.5\n  }\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"users"
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "145"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.1 - Individual collection",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"userId\": 456,\n  \"reference\": \"ASD-0021_349256E\",\n  \"amount\": 100,\n  \"periodicityId\": \"M\",\n  \"firstCollectionDate\": \"2024-07-16\",\n  \"collectionValidity\": {\n    \"type\": \"CHARGES\",\n    \"validUntil\": \"1\"\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"collections"
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "42"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.2 - Search for collections",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections?accountNumber=001662653021",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"collections"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2022-08-01",
+													"disabled": true
+												},
+												{
+													"key": "to",
+													"value": "2022-10-30",
+													"disabled": true
+												},
+												{
+													"key": "accountNumber",
+													"value": "001662653021"
+												},
+												{
+													"key": "reference",
+													"value": "160000210349253",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "42"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.3 - Collections processed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2024-04-01&to=2024-06-01&page=0&size=10",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"transactions"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2024-04-01"
+												},
+												{
+													"key": "to",
+													"value": "2024-06-01"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "10"
+												}
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "150"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Massive",
+							"item": [
+								{
+									"name": "1.1 - Massive user operation",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\n  {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago tel\",\n    \"rfc\": \"JICA940202KT9\",\n    \"accountNumber\": \"4578986875214586\",\n    \"accountType\": \"DEBIT CARD\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 4250.5\n  },\n {\n    \"fullName\": \"Jorge Romulo Santos\",\n    \"alias\": \"pago tel\",\n    \"rfc\": \"JICA940202KT9\",\n    \"accountNumber\": \"4578986875214586\",\n    \"accountType\": \"DEBIT CARD\",\n    \"email\": \"jorge@gmail.com\",\n    \"minimumAmount\": 1,\n    \"maximumAmount\": 4250.5\n  }\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/users",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"users"
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "145"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Massive collection operation",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true,
+											"content-type": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Option",
+												"value": "{{api-header-boption}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"operationType\": \"Collection\",\n  \"file\": {\n    \"content\":\"MDF8MTUvMDkvMjAyM3w0CjAyfDF8MXwwNTg1OTcwMDAxNDkwMjA5NTZ8MTF8TWVuc3VhbHwwMS8xMi8yMDIzfElMSU1JVEFET3x8fDE2MDAwMDIxMDM0OTI1NXwxMDB8UHJ1ZWJhMQowMnwyfDF8MDU4NTk3MTgwNTA1NjAwNTQyfDE5fE1lbnN1YWx8MDIvMTIvMjAyM3xJTElNSVRBRE98fHwxNjAwMDAyMTAzNDkyNTV8MTAwfFBydWViYTI=\",\n    \"name\": \"HBDAASTF000012122505230001.csv\",\n    \"format\": \"csv\"\n  }\n}\n\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"massive-operations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.1 - Search for collections",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/collections?accountNumber=001662653021",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"collections"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2022-08-01",
+													"disabled": true
+												},
+												{
+													"key": "to",
+													"value": "2022-10-30",
+													"disabled": true
+												},
+												{
+													"key": "accountNumber",
+													"value": "001662653021"
+												},
+												{
+													"key": "reference",
+													"value": "160000210349253",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "42"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.2 - Collections processed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/agreements/:agreementId/transactions?from=2024-04-01&to=2024-06-01&page=0&size=10",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"agreements",
+												":agreementId",
+												"transactions"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2024-04-01"
+												},
+												{
+													"key": "to",
+													"value": "2024-06-01"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "10"
+												}
+											],
+											"variable": [
+												{
+													"key": "agreementId",
+													"value": "150"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Periodic charges",
+					"item": [
+						{
+							"name": "Settings and General",
+							"item": [
+								{
+									"name": "1.1 - Get a token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+                                            		"pm.environment.set(\"api-header-authorization\", json.access_token);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{iam-client-id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{iam-client-secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "openid",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+											"host": [
+												"{{iam-https-protocol}}{{iam-host-domain}}"
+											],
+											"path": [
+												"auth",
+												"v1",
+												"oidc",
+												"token"
+											]
+										}
+									}
+								},
+								{
+									"name": "2.1 - Generate a verification code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var json = JSON.parse(responseBody);",
+													"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"verification-codes"
+											]
+										}
+									}
+								},
+								{
+									"name": "3.1 - Configure a email notification",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"coas",
+												"v1.0",
+												"configurations",
+												"emails"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Periodic charges",
+							"item": [
+								{
+									"name": "1.1 - Search for affiliations",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges/affiliations",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"periodic-charges",
+												"affiliations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Generate new periodic charge",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cardNumber\": \"4741576727015432\",\n  \"cardHolderName\": \"Gabriel Juarez\",\n  \"amount\": 100.00,\n  \"concept\": \"Concept\",\n  \"reference\": \"1000412\",\n  \"affiliationId\": 7090010\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"periodic-charges"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "3.1 - Search for periodic charge",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges/:chargeId",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"periodic-charges",
+												":chargeId"
+											],
+											"variable": [
+												{
+													"key": "chargeId",
+													"value": "ec7ef614-89c4-4918-8cc9-14993e5a7230"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Massive",
+							"item": [
+								{
+									"name": "1.1 - Massive periodic charges",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true,
+											"content-type": true
+										}
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "default"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "default"
+											},
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Option",
+												"value": "{{api-header-boption}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{api-header-contenttype}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Authentication-Code",
+												"value": "{{api-header-bauthentication-code}}",
+												"type": "default"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"operationType\": \"Periodic_Charges\",\n  \"file\": {\n    \"content\":\"MDF8MjUvMDIvMjAyNHwxMg0KMDJ8MXw0NzQxNzQzNTAwOTIyNTIyfE5vbWJyZSBkZWwgdGl0dWxhciBkZSBsYSB0YXJqZXRhfFJlZmVyZW5jaWF8MTAwMC4wMHxDYXJnbyBkZSBwcnVlYmENCjAyfDJ8NDc0MTc1MTczODQ1NDgzOHxOb21icmUgZGVsIHRpdHVsYXIgZGUgbGEgdGFyamV0YXxSZWZlcmVuY2lhfDEwMDAuMDB8Q2FyZ28gZGUgcHJ1ZWJh\",\n    \"name\": \"HBDAASTF000012122505230001.csv\",\n    \"format\": \"csv\"\n  }\n}\n\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"misc",
+												"v1.0",
+												"massive-operations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "2.1 - Search for periodic charges",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{api-header-authorization}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "B-Application",
+												"value": "{{api-header-bapplication}}",
+												"type": "text"
+											},
+											{
+												"key": "B-Transaction",
+												"value": "{{api-header-transaction}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "{{api-header-accept}}",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Charset",
+												"value": "{{api-header-acceptcharset}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{api-https-protocol}}{{api-host-domain}}/caas/v1.0/periodic-charges?from=2025-03-01&to=2025-04-01&page=1&size=10&affiliationId=8090015&status=1",
+											"host": [
+												"{{api-https-protocol}}{{api-host-domain}}"
+											],
+											"path": [
+												"caas",
+												"v1.0",
+												"periodic-charges"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "2025-03-01"
+												},
+												{
+													"key": "to",
+													"value": "2025-04-01"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "size",
+													"value": "10"
+												},
+												{
+													"key": "affiliationId",
+													"value": "8090015"
+												},
+												{
+													"key": "status",
+													"value": "1"
+												},
+												{
+													"key": "massiveOperationId",
+													"value": "fff63e2c-7704-4d71-8e55-271b69ff3d46"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
 				}
 			]
 		}
