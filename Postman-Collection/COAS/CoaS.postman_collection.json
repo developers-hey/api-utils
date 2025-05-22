@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2c431136-49b0-4c15-a4b8-d360aaab1fae",
+		"_postman_id": "f0410f0e-eff7-48f8-bf6a-f30e97fe4ff2",
 		"name": "CoaS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -357,7 +357,58 @@
 					"response": []
 				},
 				{
-					"name": "4-HealthCheck",
+					"name": "4-Operations Summary",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{api-header-authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "B-Application",
+								"value": "{{api-header-bapplication}}"
+							},
+							{
+								"key": "Accept",
+								"value": "{{api-header-accept}}",
+								"type": "default"
+							},
+							{
+								"key": "B-Transaction",
+								"value": "{{api-header-transaction}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept-Charset",
+								"value": "{{api-header-acceptcharset}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/account-holder-validation/summary",
+							"host": [
+								"{{api-https-protocol}}{{api-host-domain}}"
+							],
+							"path": [
+								"coas",
+								"v1.0",
+								"configurations",
+								"account-holder-validation",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5-HealthCheck",
 					"request": {
 						"auth": {
 							"type": "bearer",

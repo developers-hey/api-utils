@@ -9,17 +9,476 @@
 			"name": "Flows",
 			"item": [
 				{
-					"name": "Pay services",
+					"name": "Settings and General",
 					"item": [
 						{
-							"name": "4.1-Generate verification code",
+							"name": "1.1 - Get a token",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"var json = JSON.parse(responseBody);",
-											"pm.environment.set(\"api-header-bauthentication-code\", json.data['authentication-code']);"
+											"pm.environment.set(\"api-header-authorization\", json.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{iam-client-id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{iam-client-secret}}",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "openid",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+									"host": [
+										"{{iam-https-protocol}}{{iam-host-domain}}"
+									],
+									"path": [
+										"auth",
+										"v1",
+										"oidc",
+										"token"
+									]
+								}
+							}
+						},
+						{
+							"name": "2.1 - Generate a verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"verification-codes"
+									]
+								}
+							}
+						},
+						{
+							"name": "3.1 - Configure a email notification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"coas",
+										"v1.0",
+										"configurations",
+										"emails"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Services payment",
+					"item": [
+						{
+							"name": "1.1 - Search a category",
+							"event": [],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"payments",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.2 - Search a provider",
+							"event": [],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories/:categoryId/services/:serviceId/providers",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"payments",
+										"categories",
+										":categoryId",
+										"services",
+										":serviceId",
+										"providers"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": ""
+										},
+										{
+											"key": "serviceId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.3 - Provider required fields",
+							"event": [],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/paas/v1.0/payments/categories/:categoryId/services/:serviceId/providers/:providerId/required-fields",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"paas",
+										"v1.0",
+										"payments",
+										"categories",
+										":categoryId",
+										"services",
+										":serviceId",
+										"providers",
+										":providerId",
+										"required-fields"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": ""
+										},
+										{
+											"key": "serviceId",
+											"value": ""
+										},
+										{
+											"key": "providerId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - Generate a verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
 										],
 										"type": "text/javascript"
 									}
@@ -89,7 +548,7 @@
 							"response": []
 						},
 						{
-							"name": "4.2-Pay service",
+							"name": "3.1 - Pay service",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -160,17 +619,17 @@
 					]
 				},
 				{
-					"name": "Pay taxes",
+					"name": "Taxes payment",
 					"item": [
 						{
-							"name": "1.1-Generate verification code",
+							"name": "1.1-Generate a verification code",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"var json = JSON.parse(responseBody);",
-											"pm.environment.set(\"api-header-bauthentication-code\", json.data['authentication-code']);"
+											"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
 										],
 										"type": "text/javascript"
 									}
@@ -309,7 +768,7 @@
 							"response": []
 						},
 						{
-							"name": "1.3-Get Receipt",
+							"name": "1.3 - Get Receipt",
 							"protocolProfileBehavior": {
 								"disabledSystemHeaders": {},
 								"disableBodyPruning": true
@@ -386,7 +845,7 @@
 			"name": "Payments",
 			"item": [
 				{
-					"name": "1-Categories",
+					"name": "1 - Categories",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true,
 						"disabledSystemHeaders": {
@@ -452,7 +911,7 @@
 					"response": []
 				},
 				{
-					"name": "2-Providers",
+					"name": "2 - Providers",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -517,7 +976,7 @@
 					"response": []
 				},
 				{
-					"name": "3-Provider",
+					"name": "3 - Provider",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -588,7 +1047,7 @@
 					"response": []
 				},
 				{
-					"name": "4-Payments",
+					"name": "4 - Payments",
 					"request": {
 						"auth": {
 							"type": "bearer",
