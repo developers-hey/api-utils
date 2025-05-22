@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "584febb7-96de-489a-969d-4fc9f61411ab",
-		"name": "AAAS",
+		"_postman_id": "5fb86e74-fca8-49d8-ad38-dd39818a957c",
+		"name": "VTAAS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "45176497"
 	},
@@ -209,9 +209,14 @@
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "Value Transfers",
+					"item": [
 						{
-							"name": "2.1 - Generate a verification code",
+							"name": "1.1 - Get ETV detail",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -237,7 +242,7 @@
 									},
 									{
 										"key": "B-Option",
-										"value": "{{api-header-boption}}",
+										"value": "0",
 										"type": "text"
 									},
 									{
@@ -251,37 +256,103 @@
 										"type": "text"
 									},
 									{
-										"key": "Content-Type",
-										"value": "{{api-header-contenttype}}",
+										"key": "B-Authentication-Code",
+										"value": "ELSBZ4",
 										"type": "text"
 									},
 									{
-										"key": "B-Authentication-Code",
-										"value": "",
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/vtaas/v1.0/value-transfers",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"vtaas",
+										"v1.0",
+										"value-transfers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.2 - Get process catalog",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "0",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "ELSBZ4",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/catalogs?catalogId=8",
 									"host": [
 										"{{api-https-protocol}}{{api-host-domain}}"
 									],
 									"path": [
 										"misc",
 										"v1.0",
-										"verification-codes"
+										"catalogs"
+									],
+									"query": [
+										{
+											"key": "catalogId",
+											"value": "8"
+										}
 									]
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Payments",
-					"item": [
+						},
 						{
-							"name": "1.1 - Payment-create",
+							"name": "1.3 - Save a file",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -321,11 +392,6 @@
 										"type": "text"
 									},
 									{
-										"key": "B-Authentication-Code",
-										"value": "ELSBZ4",
-										"type": "text"
-									},
-									{
 										"key": "Content-Type",
 										"value": "{{api-header-contenttype}}",
 										"type": "text"
@@ -333,7 +399,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"amount\": 300.12,\n  \"description\": \"Cargo por compra de tiempo aire\",\n  \"reference\": \"XZ000001\"\n}",
+									"raw": "{\n  \"name\": \"Traspaso-Valores.pdf\",\n  \"extension\": \"pdf\",\n  \"content\": \"U29mdHdhcmVFbmdpbmVlcmluZ0lzQXdlc29tZQ==\",\n  \"processId\": \"6e4eea16-6ce8-48c4-b665-a580de02b2e6\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -341,26 +407,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{api-https-protocol}}{{api-host-domain}}/aaas/v1.0/payments",
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/vtaas/v1.0/value-transfers/{{companyId}}/files-management",
 									"host": [
 										"{{api-https-protocol}}{{api-host-domain}}"
 									],
 									"path": [
-										"aaas",
+										"vtaas",
 										"v1.0",
-										"payments"
+										"value-transfers",
+										"{{companyId}}",
+										"files-management"
 									]
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Massive",
-					"item": [
+						},
 						{
-							"name": "1.1 - Massive-operation-transactions",
+							"name": "2.1 - Get file all",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -372,7 +435,7 @@
 										}
 									]
 								},
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "B-Application",
@@ -386,7 +449,7 @@
 									},
 									{
 										"key": "B-Option",
-										"value": "{{api-header-boption}}",
+										"value": "0",
 										"type": "text"
 									},
 									{
@@ -403,38 +466,48 @@
 										"key": "Content-Type",
 										"value": "{{api-header-contenttype}}",
 										"type": "text"
-									},
-									{
-										"key": "B-Authentication-Code",
-										"value": "ELSBZ4",
-										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"operationType\": \"Daily_Transactions\",\n    \"file\": {\n        \"content\": \"MXw4OTIwMzc3fDk4NDUxMjQxMDAxNHwxLjAwfDF8MXxBYm9ubyB2ZW50YXMgVEREIFB1bnRvIGRlIFZlbnRhIDEKMnw4OTIwMzc3fDk4NDUxMjQxMDAxNHwyLjAwfDF8MnxBYm9ubyB2ZW50YXMgVEREIFB1bnRvIGRlIFZlbnRhID=\",\n        \"name\": \"BRDAASTF000012122505230001.csv\",\n        \"format\": \"csv\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/vtaas/v1.0/value-transfers/{{companyId}}/files-management?page={{page}}&size={{size}}&processId={{processId}}&from={{from}}&to={{to}}",
 									"host": [
 										"{{api-https-protocol}}{{api-host-domain}}"
 									],
 									"path": [
-										"misc",
+										"vtaas",
 										"v1.0",
-										"massive-operations"
+										"value-transfers",
+										"{{companyId}}",
+										"files-management"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "{{page}}"
+										},
+										{
+											"key": "size",
+											"value": "{{size}}"
+										},
+										{
+											"key": "processId",
+											"value": "{{processId}}"
+										},
+										{
+											"key": "from",
+											"value": "{{from}}"
+										},
+										{
+											"key": "to",
+											"value": "{{to}}"
+										}
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "1.1 - Massive-operation-comissions",
+							"name": "3.1 - Get a file",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -446,7 +519,7 @@
 										}
 									]
 								},
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "B-Application",
@@ -460,7 +533,7 @@
 									},
 									{
 										"key": "B-Option",
-										"value": "{{api-header-boption}}",
+										"value": "0",
 										"type": "text"
 									},
 									{
@@ -477,16 +550,74 @@
 										"key": "Content-Type",
 										"value": "{{api-header-contenttype}}",
 										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/vtaas/v1.0/value-transfers/{{companyId}}/files-management/{{fileId}}",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"vtaas",
+										"v1.0",
+										"value-transfers",
+										"{{companyId}}",
+										"files-management",
+										"{{fileId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4.1 - Update a file",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
 									},
 									{
-										"key": "B-Authentication-Code",
-										"value": "ELSBZ4",
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "0",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"operationType\": \"Comissions\",\n    \"file\": {\n        \"content\": \"MXw4OTIwMzc3fDk4NDUxMjQxMDAxNHwxLjAwfDF8MXxBYm9ubyB2ZW50YXMgVEREIFB1bnRvIGRlIFZlbnRhIDEKMnw4OTIwMzc3fDk4NDUxMjQxMDAxNHwyLjAwfDF8MnxBYm9ubyB2ZW50YXMgVEREIFB1bnRvIGRlIFZlbnRhID=\",\n        \"name\": \"BRDAASTF000012122505230001.csv\",\n        \"format\": \"csv\"\n    }\n}",
+									"raw": "{\n  \"content\": \"U29mdHdhcmVFbmdpbmVlcmluZ0lzQXdlc29tZQ==\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -494,144 +625,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/vtaas/v1.0/value-transfers/{{companyId}}/files-management/{{fileId}}",
 									"host": [
 										"{{api-https-protocol}}{{api-host-domain}}"
 									],
 									"path": [
-										"misc",
+										"vtaas",
 										"v1.0",
-										"massive-operations"
+										"value-transfers",
+										"{{companyId}}",
+										"files-management",
+										"{{fileId}}"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				}
-			]
-		},
-		{
-			"name": "Payments",
-			"item": [
-				{
-					"name": "1-payment-create",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{api-header-authorization}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "B-Application",
-								"value": "{{api-header-bapplication}}",
-								"type": "text"
-							},
-							{
-								"key": "B-Transaction",
-								"value": "{{api-header-transaction}}",
-								"type": "text"
-							},
-							{
-								"key": "B-Option",
-								"value": "0",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "{{api-header-accept}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Charset",
-								"value": "{{api-header-acceptcharset}}",
-								"type": "text"
-							},
-							{
-								"key": "B-Authentication-Code",
-								"value": "ELSBZ4",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "{{api-header-contenttype}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"amount\": 300.12,\n  \"description\": \"Cargo por compra de tiempo aire\",\n  \"reference\": \"XZ000001\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/aaas/v1.0/payments",
-							"host": [
-								"{{api-https-protocol}}{{api-host-domain}}"
-							],
-							"path": [
-								"aaas",
-								"v1.0",
-								"payments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "2 - Health check",
-					"request": {
-						"method": "OPTIONS",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "{{api-header-accept}}",
-								"type": "text"
-							},
-							{
-								"key": "B-Application",
-								"value": "{{api-header-bapplication}}",
-								"type": "text"
-							},
-							{
-								"key": "B-Transaction",
-								"value": "{{api-header-transaction}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Charset",
-								"value": "{{api-header-acceptcharset}}",
-								"type": "text"
-							},
-							{
-								"key": "B-option",
-								"value": "0",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{api-https-protocol}}{{api-host-domain}}/aaas/v1.0/payments",
-							"host": [
-								"{{api-https-protocol}}{{api-host-domain}}"
-							],
-							"path": [
-								"aaas",
-								"v1.0",
-								"payments"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}

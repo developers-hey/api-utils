@@ -6,6 +6,1679 @@
 	},
 	"item": [
 		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Settings and General",
+					"item": [
+						{
+							"name": "1.1 - Get a token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+                                            "pm.environment.set(\"api-header-authorization\", json.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{iam-client-id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{iam-client-secret}}",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "openid",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{iam-https-protocol}}{{iam-host-domain}}/auth/v1/oidc/token",
+									"host": [
+										"{{iam-https-protocol}}{{iam-host-domain}}"
+									],
+									"path": [
+										"auth",
+										"v1",
+										"oidc",
+										"token"
+									]
+								}
+							}
+						},
+						{
+							"name": "2.1 - Generate a verification code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"pm.environment.set('api-header-bauthentication-code', json.data['authentication-code']);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/verification-codes",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"verification-codes"
+									]
+								}
+							}
+						},
+						{
+							"name": "3.1 - Configure a email notification",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"ejemplo@ejemplo2.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/coas/v1.0/configurations/emails",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"coas",
+										"v1.0",
+										"configurations",
+										"emails"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Interbank transfer",
+					"item": [
+						{
+							"name": "1.1 - Creation of interbank destination account",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"072320703733250585\",\n      \"accountType\": 3,\n      \"financialEntityId\": \"072\",\n      \"beneficiaryName\": \"Prueba uno\",\n      \"alias\": \"Amigo\",\n      \"beneficiaryRFC\": \"AAXL881128H40\",\n      \"email\": \"ejemplo@prueba.com\"\n    }\n  ],\n  \"dynamicValues\": [\n    {\n      \"ownerId\": \"986096f9-8029-43e2-b3da-3f177d19d7d1\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - Interbank transfers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"issuerAccountNumber\": \"000724750010\",\n  \"recipientAccountId\": \"00ce724d-bc1e-4900-8527-cdb2ac7aba1f\",  \n  \"concept\": \"pago 2 prestamo\",\n  \"amount\": 100.10,\n  \"numericalReference\": \"1234567\",\n  \"type\": \"SPEI\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"interbank-transfers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.2 - Search for interbank transfer",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/:transferId",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"interbank-transfers",
+										":transferId"
+									],
+									"variable": [
+										{
+											"key": "transferId",
+											"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.3 - Search for interbank transfers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers?accountID=882b25f2-5513-405a-97ae-3226f9a2c707&from=2024-01-12&to=2024-01-12&page=1&size=10&type=SPEI",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"interbank-transfers"
+									],
+									"query": [
+										{
+											"key": "accountID",
+											"value": "882b25f2-5513-405a-97ae-3226f9a2c707"
+										},
+										{
+											"key": "from",
+											"value": "2024-01-12"
+										},
+										{
+											"key": "to",
+											"value": "2024-01-12"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "type",
+											"value": "SPEI"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Internal transfer",
+					"item": [
+						{
+							"name": "1.1 - Creation of internal destination account",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"0006444756\",\n      \"accountType\": 1,\n      \"financialEntityId\": \"002\",\n      \"beneficiaryName\": \"Prueba uno\",\n      \"alias\": \"Amigo\",\n      \"beneficiaryRFC\": \"AAXL881128H40\",\n      \"email\": \"ejemplo@prueba.com\"\n    }\n  ],\n  \"dynamicValues\": [\n    {\n      \"ownerId\": \"986096f9-8029-43e2-b3da-3f177d19d7d1\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - Internal transfers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"issuerAccountNumber\": \"998797240061\",\r\n    \"recipientAccountId\": \"ba4c6485-514d-4845-8aee-0aa74187fc33\",\r\n    \"amount\": 11.45,\r\n    \"transferDescription\": \"pago de cel\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"internal-transfers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.2 - Search for internal transfer",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers/:transferId",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"internal-transfers",
+										":transferId"
+									],
+									"variable": [
+										{
+											"key": "transferId",
+											"value": "21251b6b-2ee8-43c3-be41-e1e8ca6e00f9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.3 - Search for internal transfers",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/internal-transfers?accountID=806f2424-14c4-4ca1-a5d1-a12ed3fde60a&from=2023-12-26&to=2023-12-29&page=1&size=10",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"internal-transfers"
+									],
+									"query": [
+										{
+											"key": "accountID",
+											"value": "806f2424-14c4-4ca1-a5d1-a12ed3fde60a"
+										},
+										{
+											"key": "from",
+											"value": "2023-12-26"
+										},
+										{
+											"key": "to",
+											"value": "2023-12-29"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Massive",
+					"item": [
+						{
+							"name": "1.1 - Creation of internal destination account",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"0006444756\",\n      \"accountType\": 1,\n      \"financialEntityId\": \"002\",\n      \"beneficiaryName\": \"Prueba uno\",\n      \"alias\": \"Amigo\",\n      \"beneficiaryRFC\": \"AAXL881128H40\",\n      \"email\": \"ejemplo@prueba.com\"\n    },\n {\n      \"accountNumber\": \"0006444756\",\n      \"accountType\": 1,\n      \"financialEntityId\": \"002\",\n      \"beneficiaryName\": \"Prueba uno\",\n      \"alias\": \"Amigo\",\n      \"beneficiaryRFC\": \"AAXL881128H40\",\n      \"email\": \"ejemplo@prueba.com\"\n    }  ],\n  \"dynamicValues\": [\n    {\n      \"ownerId\": \"986096f9-8029-43e2-b3da-3f177d19d7d1\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.2 - Search for destination account",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "b-transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts?ownerId=29dc8847-41e8-4591-8adc-ad3d5fd830e5",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "ownerId",
+											"value": "3bbd573e-3c46-4285-88dd-c99ad03d32cb"
+										},
+										{
+											"key": "requestId",
+											"value": "3b34978a-b085-4288-82d8-10056da69171"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - Massive operations transfers",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "{{api-header-boption}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"operationType\": \"Transfers\",\n  \"file\": {\n    \"content\":\"MDF8MjMvMTAvMjAyM3wwMDExNzU5NTAwMjQKMDJ8MXwzfDQ4NmZmZWIwLWU3ZjMtNDY5Mi04ZTllLTdmYWM2M2NlZTc0Znx8MS4wMHxwYWdvIGRlIHBydWViYTEKMDJ8MnwzfDQ4NmZmZWIwLWU3ZjMtNDY5Mi04ZTllLTdmYWM2M2NlZTc0Znx8MS4wMHxwYWdvIGRlIHBydWViYTIKMDJ8M3wzfDQ4NmZmZWIwLWU3ZjMtNDY5Mi04ZTllLTdmYWM2M2NlZTc0Znx8MS4wMHxwYWdvIGRlIHBydWViYTMKMDJ8NHwzfDQ4NmZmZWIwLWU3ZjMtNDY5Mi04ZTllLTdmYWM2M2NlZTc0Znx8MS4wMHxwYWdvIGRlIHBydWViYTQKMDJ8NXwzfDQ4NmZmZWIwLWU3ZjMtNDY5Mi04ZTllLTdmYWM2M2NlZTc0Znx8MS4wMHxwYWdvIGRlIHBydWViYTUKMDN8MDAwMDAwNXwwMDAwMDAwMDAwMDAwNS4wMA==\",\n    \"name\": \"HBDAASTF000012122505230001.csv\",\n    \"format\": \"csv\"\n  }\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"massive-operations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Schedules",
+					"item": [
+						{
+							"name": "1.1 - Individual schedule transfer",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"issuerAccountNumber\": \"984724750010\",\r\n    \"recipientAccountId\": \"e2313926-75b0-443a-9be8-30e8a07a3860\",\r\n    \"amount\": 10.11,\r\n    \"transferDescription\": \"Pago de servicios\",\r\n    \"sendReminder\": 1,\r\n    \"schedule\": {\r\n        \"frequency\": 5,\r\n        \"period\": 2,\r\n        \"initialDate\": \"2024-01-06\",\r\n        \"finalDate\": \"2024-01-30\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"interbank-transfers",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - Massive operations transfers schedule",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "{{api-header-boption-transfers-schedule}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Authentication-Code",
+										"value": "{{api-header-bauthentication-code}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"operationType\": \"Transfers\",\n  \"file\":\n      {\n      \"content\": \"ANCjAyfDcyfDF8ZTIzMTM5MjYtNzViMC00NDNhLTliZTgtMzBlOGEwN2EzODYwfDEyMzQ1Njc4fDEwLjAwfHBydWViYSBBUEkgMSBEYXZpZHw1fDIwMjMtMDgtMTV8M3x8MTB8MQ0KMDJ8NzN8MXxlMjMxMzkyNi03NWIwLTQ0M2EtOWJlOC0zMGU4YTA3YTM4NjB8MTIzNDU2Nzh8MTAuMDB8cHJ1ZWJhIEFQSSAxIERhdmlkfDV8MjAyMy0wOC0xNXwxfHwxfDANCjAyfDc0fDF8ZTIzMTM5MjYtNzViMC00NDNhLTliZTgtMzBlOGEwN2EzODYwfDEyMzQ1Njc4fDEwLjAwfHBydWViYSBBUEkgMSBEYXZpZHw1fDIwMjMtMDgtMzF8MnwyMDIzLTExLTE1fDF8MQ0KMDJ8NzV8MXxlMjMxMzkyNi03NWIwLTQ0M2EtOWJlOC0zMGU4YTA3YTM4NjB8MTIzNDU2Nzh8MTAuMDB8cHJ1ZWJhIEFQSSAxIERhdmlkfDV8MjAyMy0wOC0xNXwzfHwxMHwwDQowMnw3NnwxfGUyMzEzOTI2LTc1YjAtNDQzYS05YmU4LTMwZThhMDdhMzg2MHwxMjM0NTY3OHwxMC4wMHxwcnVlYmEgQVBJIDEgRGF2aWR8NXwyMDIzLTA4LTMxfDF8fDF8MQ0KMDN8NzZ8NzYwLjAw\",\n      \"name\": \"HBDAASTF000012122505230003.csv\",\n      \"format\": \"csv\"  \n  }\n  \n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"massive-operations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.1 - Massive operations transfers",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true,
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "default"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "default"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Option",
+										"value": "{{api-header-boption}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/massive-operations/:massiveOperationId",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"massive-operations",
+										":massiveOperationId"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1.0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "1000",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "massiveOperationId",
+											"value": "aa161adb-b3e5-450c-925f-4f2bd1f07g7"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4.1 - Search for interbank transfer schedules",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/daas/v1.0/interbank-transfers/schedules?accountID=9b37e7b2-8407-4ddc-aad6-6958ae7917c8&page=1&size=10&type=SPEI",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"daas",
+										"v1.0",
+										"interbank-transfers",
+										"schedules"
+									],
+									"query": [
+										{
+											"key": "accountID",
+											"value": "9b37e7b2-8407-4ddc-aad6-6958ae7917c8"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "type",
+											"value": "SPEI"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Others",
+					"item": [
+						{
+							"name": "1.1 - Recipient accounts",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "b-transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts?ownerId=29dc8847-41e8-4591-8adc-ad3d5fd830e5",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "ownerId",
+											"value": "3bbd573e-3c46-4285-88dd-c99ad03d32cb"
+										},
+										{
+											"key": "requestId",
+											"value": "3b34978a-b085-4288-82d8-10056da69171"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1.2 - Delete destination account",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "{{api-header-contenttype}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "b-transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "b-option",
+										"value": "{{api-header-boption}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recipientAccounts\": [\n    {\n      \"accountNumber\": \"000724750000\",\n      \"recipientAccountId\": \"27bc9060-558f-4ef9-8ccf-6691f3908e85\"\n    }\n  ],\n  \"dynamicValues\": [\n    {\n      \"ownerId\": \"f191bfde-7ff6-4203-8d9a-7c70c0da5e4f\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/recipient-accounts",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"recipient-accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 - SPEI participants",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/catalogs/:catalog",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"catalogs",
+										":catalog"
+									],
+									"variable": [
+										{
+											"key": "catalog",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.2 - TEF participants",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{api-header-authorization}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{api-header-accept}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Transaction",
+										"value": "{{api-header-transaction}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept-Charset",
+										"value": "{{api-header-acceptcharset}}",
+										"type": "text"
+									},
+									{
+										"key": "B-Application",
+										"value": "{{api-header-bapplication}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api-https-protocol}}{{api-host-domain}}/misc/v1.0/catalogs/:catalog",
+									"host": [
+										"{{api-https-protocol}}{{api-host-domain}}"
+									],
+									"path": [
+										"misc",
+										"v1.0",
+										"catalogs",
+										":catalog"
+									],
+									"variable": [
+										{
+											"key": "catalog",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Interbank Transfers",
 			"item": [
 				{
